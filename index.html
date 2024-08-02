@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Customization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .customizations,
+        .delivery-info {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .customizations h3,
+        .delivery-info h3 {
+            margin-bottom: 10px;
+        }
+
+        .customizations div,
+        .delivery-info div {
+            margin-bottom: 10px;
+        }
+
+        .customizations label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .customizations input[type="radio"],
+        .customizations input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .delivery-info .in-stock {
+            color: green;
+        }
+
+        .delivery-info .delivery-date {
+            font-weight: bold;
+        }
+
+        .delivery-info .buy-now {
+            color: #ff1493;
+        }
+
+        #add-to-cart {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Product Page</h1>
+
+    <div class="customizations">
+        <h3>Customizations (Optional)</h3>
+
+        <div>
+            <label>Personalize Side Panels</label>
+            <input type="radio" name="side_panels" value="no" checked>No
+            <input type="radio" name="side_panels" value="yes">Yes [+$5.00]
+        </div>
+        <hr>
+
+        <div>
+            <label>Special Requests</label>
+            <input type="checkbox" name="quarter_zip" value="yes">Change Jersey to Quarter-Zip [+$2.00]<br>
+            <input type="checkbox" name="waist_gripper" value="yes">Remove Jersey Waist Gripper [+$2.00]<br>
+            <input type="checkbox" name="back_pockets" value="yes">Remove Jersey Back Pockets [+$2.00]<br>
+            <input type="checkbox" name="zippered_pocket" value="yes">Add Zippered Back Pocket [+$4.00]
+        </div>
+        <hr>
+
+        <div>
+            <label>Change Type</label>
+            <input type="radio" name="change_type" value="no" checked>No
+            <input type="radio" name="change_type" value="womens">Make as Women's
+            <input type="radio" name="change_type" value="kids">Make as Kid's
+        </div>
+        <hr>
+
+        <div>
+            <label>Change Length</label>
+            <input type="radio" name="change_length" value="no" checked>No
+            <input type="radio" name="change_length" value="sleeveless">Make as Sleeveless [+$3.00]
+            <input type="radio" name="change_length" value="long_sleeve">Make as Long Sleeve [+$4.00]
+        </div>
+    </div>
+
+    <div class="delivery-info">
+        <p><span class="in-stock">In stock ready to ship</span></p>
+        <p>Ordered before 23:00, delivered on <span class="delivery-date">Sunday August 4th</span></p>
+        <p><span class="buy-now">Buy now, pay later</span></p>
+    </div>
+
+    <button id="add-to-cart">ADD TO CART</button>
+
+    <script>
+        document.getElementById('add-to-cart').addEventListener('click', function () {
+            const customizations = {};
+
+            customizations.side_panels = document.querySelector('input[name="side_panels"]:checked').value;
+            customizations.special_requests = [];
+
+            document.querySelectorAll('input[name="quarter_zip"]:checked').forEach(el => customizations.special_requests.push(el.nextSibling.textContent.trim()));
+            document.querySelectorAll('input[name="waist_gripper"]:checked').forEach(el => customizations.special_requests.push(el.nextSibling.textContent.trim()));
+            document.querySelectorAll('input[name="back_pockets"]:checked').forEach(el => customizations.special_requests.push(el.nextSibling.textContent.trim()));
+            document.querySelectorAll('input[name="zippered_pocket"]:checked').forEach(el => customizations.special_requests.push(el.nextSibling.textContent.trim()));
+
+            customizations.change_type = document.querySelector('input[name="change_type"]:checked').value;
+            customizations.change_length = document.querySelector('input[name="change_length"]:checked').value;
+
+            alert('Customizations:\n' + JSON.stringify(customizations, null, 2));
+        });
+    </script>
+</body>
+
+</html>
